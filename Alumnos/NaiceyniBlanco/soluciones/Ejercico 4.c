@@ -13,7 +13,7 @@ int main(){
 	
 	do{
 		printf("\n\tEMPRESA KACTUSNETWORK");
-		print("\nPara registrar sus datos: \n");
+		printf("\nPara registrar sus datos: \n");
 		printf("\n1)Nombre.\n");
 		scanf("%s",&nombre);
 		printf("\n2)Apellido.\n");
