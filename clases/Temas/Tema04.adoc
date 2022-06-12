@@ -1,0 +1,382 @@
+[[capítulo-7.-sentencias-de-control-de-flujo]]
+== Capítulo 7. Sentencias de control de flujo
+
+[[introducción]]
+=== Introducción
+
+Hasta ahora los programas que hemos visto eran lineales.
+Comenzaban por la primera instrucción y acababan por la última, ejecutándose todas una sola vez.
+Lógico ¿no?.
+Pero resulta que muchas veces no es esto lo que queremos que ocurra.
+Lo que nos suele interesar es que dependiendo de los valores de los datos se ejecuten unas instrucciones y no otras. O
+también puede que queramos repetir unas instrucciones un número determinado de veces.
+Para esto están las sentencia de control de flujo.
+
+[[bucles]]
+=== Bucles
+
+Los bucles nos ofrecen la solución cuando queremos repetir una tarea un número determinado de veces.
+Supongamos que queremos escribir 100 veces la palabra hola.
+Con lo que sabemos hasta ahora haríamos:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+
+ printf( "Hola\n");
+ printf( "Hola\n");
+ printf( "Hola\n");
+ printf( "Hola\n");
+ printf( "Hola\n");
+ ... (y así hasta 100 veces)
+
+ return EXIT_SUCCESS;
+
+}
+----
+
+¡Menuda locura! Y si queremos repetirlo más veces nos quedaría un programa de lo más largo.
+
+Sin embargo usando un *bucle _for_* (ya lo veremos con calma en un rato) el programa quedaría:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	int i;
+
+	for ( i=0 ; i<100 ; i++ )
+	{
+		printf( "Hola\n" );
+	}
+
+	return EXIT_SUCCESS;
+}
+----
+
+
+Con lo que tenemos un programa más corto.
+
+[[el-bucle-for]]
+==== El bucle For
+
+El formato del bucle for es el siguiente:
+
+[source,c]
+----
+for( valores iniciales; condiciones; incrementos/cambios )
+{
+  /* conjunto de instrucciones a ejecutar en el bucle */
+}
+----
+
+El bucle for tiene tres partes:
+
+* Valores iniciales: En esta parte damos los valores iniciales a nuestro bucle, para empezar el bucle como más nos convenga.
+* Condiciones: antes de comenzar cada ciclo del bucle comprobamos si se cumplen ciertas condiciones.
+Si se cumplen se ejecuta el conjunto de instrucciones del bucle.
+* Incrementos/cambios: esta parte se ejecuta después del conjunto de instrucciones.
+Hacemos algún cambio en alguna de las variables que hemos usado en la parte de condiciones y pasamos al siguiente ciclo del __for__.
+
+Vamos a verlo con el ejemplo anterior:
+
+[source,c]
+----
+for ( i=0 ; i<100 ; i++ )
+----
+
+Las tres partes antes mencionadas serían:
+
+* En este caso usamos la variable _i_ para controlar nuestro bucle.
+Asignamos a esta variable el valor inicial 0.
+Esa es la parte de _valores iniciales_.
+* Luego tenemos _i<100_.
+Esa es la parte _condiciones_.
+En este caso la condición es que _i_ sea menor que 100, de modo que el bucle continuará mientras _i_ sea menor que 100.
+Es decir, mientras se cumpla la condición.
+Si se cumple se ejecuta el bloque de instrucciones del _for_.
+Si no se cumple la condición damos el bucle por terminado y el programa continúa.
+* Luego tenemos la parte de _incrementos_, donde indicamos cuánto se incrementa la variable.
+En el ejemplo le sumamos uno a la variable _i_.
+
+*¿Cómo funciona el for?*
+
+* La primera vez que el programa llega al _for_ se asigna un valor inicial a _i_.
+* A continuación se comprueba la condición.
+* Como i tiene el valor 0 se cumple.
+* Se ejecuta el bloque de instrucciones que está justo después del for.
+* El programa va a la sección de incrementos y ve que tiene que incrementar el valor de _i_ en 1.
+* Se comprueba la condición otra vez.
+* ...
+* Repetimos hasta que ya no se cumpla la condición (_i_ coge el valor 100).
+
+El _for_ va delante del grupo de instrucciones a ejecutar.
+Si la condición es falsa desde el principio, esas instrucciones no se ejecutan ni una sola vez.
+Por ejemplo:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    char i;
+
+    for (i=0; i<0; i++) {
+        printf("Me siento tan invisible \n");
+    }
+
+    return EXIT_SUCCESS;
+}
+----
+
+Este programa no va a mostrar nada porque el _printf_ no llega a ejecutarse nunca.
+
+Cuidado: No se debe poner un ";" justo después de la sentencia for.
+Si lo hacemos entonces sería un bucle vacío y las instrucciones siguientes sólo se ejecutarían una vez.
+Veamoslo con un ejemplo:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	int i;
+
+	for ( i=0 ; i<100 ; i++ ); /* Cuidado con este punto y coma */
+	{
+		printf( "Hola\n" );
+	}
+
+	return EXIT_SUCCESS;
+}
+----
+
+Este programa sólo escribirá en pantalla:
+
+----
+Hola
+----
+
+una sola vez.
+El bucle se ejecuta pero el ';' hace que el bloque que viene a continuación no se considere parte del _for_.
+
+También puede suceder que quieras ejecutar un cierto número de veces una sola instrucción (como sucede en nuestro ejemplo).
+Entonces no necesitas las llaves "\{}":
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	int i;
+
+	for ( i=0 ; i<100 ; i++ ) printf( "Hola\n" );
+
+	return EXIT_SUCCESS;
+}
+----
+
+o también:
+
+[source,c]
+----
+for ( i=0 ; i<100 ; i++ )
+  printf( "Hola\n" );
+----
+
+Sin embargo, yo me he encontrado muchas veces que es mejor poner las llaves aunque sólo haya una instrucción;
+a veces al añadir una segunda instrucción más tarde se te olvidan las comillas y no te das cuenta.
+Parece una tontería, pero muchas veces, cuando programas, son estos los pequeños fallos los que te vuelven loco.
+
+En otros lenguajes, como Basic, la sentencia for es muy rígida.
+En cambio en C es muy flexible.
+Se puede omitir cualquiera de las secciones (inicialización, condiciones o incrementos).
+También se pueden poner más de una variable a inicializar, más de una condición y más de un incremento.
+Por ejemplo, el siguiente programa sería perfectamente correcto:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	int i, j;
+
+	for( i=0, j=5 ; i<10 ; i++, j=j+5 )
+	{
+		printf( "Hola " );
+		printf( "Esta es la línea %i", i );
+		printf( "j vale = %i\n", j );
+	}
+
+	return EXIT_SUCCESS;
+}
+----
+
+
+Como vemos en el ejemplo tenemos más de una variable en la sección de inicialización y en la de incrementos.
+También podíamos haber puesto más de una condición.
+Los elementos de cada sección se separan por comas.
+Cada sección se separa por punto y coma.
+
+[[bucles-infinitos]]
+===== Bucles infinitos
+
+Entramos en un bucle infinito cuando nuestro for nunca termina.
+Esta es una situación a evitar y puede ocurrir si no tenemos cuidado.
+Con un _for_ un bucle infinito puede ocurrir cuando:
+
+1) No usamos la condición:
+
+En caso de omitirse la condición el bucle se ejecuta continuamente sin detenerse.
+A este tipo de bucle se le conoce como 'endless loop' o 'bucle infinito'.
+Por ejemplo:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+ int i, j;
+
+ for( i=0; ; i++ ) {
+ printf( "Este bucle no terminará nunca." );
+ }
+
+ return EXIT_SUCCESS;
+}
+----
+
+
+Este ejemplo estará ejecutándose indefinidamente porque el bucle _for_ no tiene una condición de finalización.
+Lo mismo ocurriría con, por ejemplo, este otro:
+
+for( ; ; )
+
+2) No usamos incrementos:
+
+Si no hay nada que cambie en cada ciclo, el _for_ no puede “avanzar”:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  int i;
+
+  for (i=0; i<10; ) {
+    printf("Soy un bucle infinito\n");
+  }
+
+  return EXIT_SUCCESS;
+}
+----
+
+En este ejemplo _i_ nunca será mayor que 10 puesto que su valor no cambia nunca.
+
+3) La condición se cumple siempre:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  char i;
+
+  for (i=0; i==i; i++) {
+    printf("Soy un bucle infinito\n");
+  }
+
+  return EXIT_SUCCESS;
+}
+----
+
+En este caso siempre se va a cumplir que i==i por lo tanto el bucle no terminará nunca.
+
+[[while]]
+==== While
+
+
+El formato del bucle while es es siguiente:
+
+[source,c]
+----
+while ( condición )
+{
+  /* bloque de instrucciones a ejecutar */
+}
+----
+
+_While_ quiere decir _mientras_.
+Aquí se ejecuta el bloque de instrucciones mientras se cumpla la condición impuesta en while.
+
+Vamos a ver un ejemplo:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  int contador = 0;
+
+  while ( contador<100 ) {
+    contador++;
+    printf( "Ya voy por el %i, pararé enseguida.\n", contador );
+  }
+
+  return EXIT_SUCCESS;
+}
+----
+
+Este programa imprime en pantalla los valores del 1 al 100.
+Cuando i=100 ya no se cumple la condición.
+Un detalle importante: si hubiésemos cambiado el orden de las instrucciones a ejecutar tendríamos un resultado diferente:
+
+[source,c]
+----
+printf( "Ya voy por el %i, pararé enseguida.\n", contador );
+contador++;
+----
+
+En esta ocasión se imprimen los valores del 0 al 99.
+Cuidado con ésto, que a veces produce errores difíciles de encontrar.
+
+[[do-while]]
+==== Do While
+
+El formato del bucle do-while es:
+
+[source,c]
+----
+do
+{
+  /* instrucciones a ejecutar */
+} while ( condición );
+----
+
+La diferencia entre _while_ y _do-while_ es que en este último, la condición va despues del conjunto de instrucciones a ejecutar.
+De esta forma, esas instrucciones se ejecutan al menos una vez.
+
+Su uso es similar al de _while_.

@@ -1,0 +1,1949 @@
+Tema 2: Tipos de Datos, Expresiones, Lectura y Escritura
+
+== Capítulo 1. Introducción.
+
+=== Sobre el libro
+
+Este es un curso para principiantes así que intentaré que no haga falta ningún conocimiento anterior para seguirlo.
+Muchos otros cursos suponen conocimientos previos pero voy a intentar que eso no suceda aquí.
+
+NOTA IMPORTANTE: Si te pierdes no te desanimes, ponte en contacto conmigo y consúltame (al final del libro tienes varias formas para contactarme).
+Puede que alguna sección esté mal explicada. De esta forma estarás colaborando a mejorar el libro.
+
+=== Cómo resolver tus dudas
+
+En la última sección del libro podrás encontrar varias formas de contactar conmigo (email, Twitter, mi blog, etc).
+
+=== El lenguaje C
+
+El lenguaje C es uno de los más rápidos y potentes que hay hoy en día. Hay quien dice que está desfasado. No se si tendrá futuro pero está claro que presente si tiene. No hay más que decir que el sistema operativo Linux está desarrollado en C en su práctica totalidad. Así que creo que no sólo no perdemos nada aprendiéndolo sino que ganamos mucho. Para empezar nos servirá como base para aprender C++ e introducirnos en el mundo de la programación Windows. Si optamos por Linux existe una biblioteca llamada gtk (o librería, como prefieras) que permite desarrollar aplicaciones estilo Windows con C.
+
+No debemos confundir C con {Cmasmas}, que no son lo mismo. Se podría decir que {Cmasmas} es una extensión de C.
+Para empezar en {Cmasmas} conviene tener una sólida base de C.
+Existen otros lenguajes como Visual Basic que son muy sencillos de aprender y de utilizar.
+Nos dan casi todo hecho.
+Pero cuando queremos hacer algo complicado o que sea rápido debemos recurrir a otros lenguajes ({Cmasmas}, Delphi,...).
+
+===  Peculiaridades de C
+
+Una de las cosas importantes de C que debes recordar es que es Case Sensitive (sensible a las mayúsculas o algo así). Es decir que para C no es lo mismo escribir Printf que printf.
+Conviene indicar también que las instrucciones se separan por ";".
+
+=== Compiladores de C
+
+Un compilador es un programa que convierte nuestro código fuente en un programa ejecutable (me imagino que la mayoría ya lo sabéis pero más vale asegurar).
+El ordenador trabaja con 0 y 1.
+Si escribiéramos un programa en el lenguaje del ordenador nos volveríamos locos. Para eso están lenguajes como el C.
+Nos permiten escribir un programa de manera que sea fácil entenderlo por una persona (el código fuente).
+Luego es el compilador el que se encarga de convertirlo al complicado idioma de un ordenador.
+
+En la practica a la hora de crear un programa nosotros escribimos el código fuente, en nuestro caso en C, que normalmente será un fichero de texto normal y corriente que contiene las instrucciones de nuestro programa.
+Luego se lo pasamos al compilador y este se encarga de convertirlo en un programa.
+
+Si tenemos el código fuente podemos modificar el programa tantas veces como queramos (sólo tenemos que volver a compilarlo), pero si tenemos el ejecutable final no podremos cambiar nada (realmente sí se puede pero es mucho más complicado y requiere más conocimientos).
+
+Existen multitud de compiladores.
+Yo suelo recomendar el Geany y Code::Blocks, que tiene versiones tanto para Linux como para Windows.
+Estos programas usan el compilador GNU GCC (http://gcc.gnu.org) y se pueden descargar aquí:
+
+* Geany - http://www.geany.org/
+* Code::Blocks - http://www.codeblocks.org/
+
+Nota: Cuando comencé a escribir el curso solía usar el DJGPP en Windows, sin embargo, ahora me decanto más bien por el Geany por la comodidad y facilidad que supone para los principiantes.
+
+=== El editor de código fuente
+
+El compilador en sí mismo sólo es un programa que traduce nuestro código fuente y lo convierte en un ejecutable. Para escribir nuestros programas necesitamos un editor. La mayoría de los compiladores al instalarse incorporan ya un editor; es el caso de los conocidos Turbo C, Borland C, Code::Blocks, Visual C++,... Pero otros no lo traen por defecto. No debemos confundir por tanto el editor con el compilador.
+Estos editores suelen tener unas características que nos facilitan mucho el trabajo: permiten compilar y ejecutar el programa directamente, depurarlo (corregir errores), gestionar complejos proyectos, etc.
+Si nuestro compilador no trae editor la solución más simple usar un editor de texto plano (sin formato).
+
+=== IDE: Entorno de desarrollo integrado
+
+Para la comodidad de los desarrolladores se crearon lo que se llaman Entornos de Desarrollo Integrado (en inglés IDE). Un IDE es un software que incluye todo lo necesario para la programación: un compilador (con todos sus programas accesorios), un editor con herramientas que ayudan en la creación de programas, un depurador para buscar errores, etc... Es la solución más completa y recomendada.
+
+Existen multitud de IDE que puedes utilizar. Geany y Code::Blocks anteriormente mencionados son muy recomendables en entornos MS Windows, para Linux tenemos montones de opciones, como el Geany, Anjuta o el Kdevelop.
+
+=== El primer programa: Hola Mundo
+
+En un alarde de originalidad vamos a hacer nuestro primer programa: hola mundo. Nadie puede llegar muy lejos en el mundo de la programación sin haber empezado su carrera con este original y funcional programa. Allá va:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    /* Aquí va el cuerpo del programa */
+    printf("Hola mundo\n");
+    return EXIT_SUCCESS;
+}
+----
+
+.Si trabajas en Windows
+[NOTE]
+====
+Hay mucha gente que programa en Windows que se queja de que cuando ejecuta el programa no puede ver el resultado.
+Para evitarlo se puede añadir antes de return 0; la siguiente línea:
+
+[source,c]
+----
+system("PAUSE");
+----
+
+Si esto no funciona prueba a añadir getch();
+
+Otra nota: En compiladores MS Windows, para poder usar la función _system()_ debes añadir al principio del fichero la línea:
+
+[source,c]
+----
+#include <windows.h>
+----
+====
+
+Este programa lo único que hace es sacar por pantalla el mensaje:
+
+----
+Hola mundo
+----
+
+Vamos ahora a comentar el programa línea por línea (Esto no va a ser más que una primera aproximación).
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+----
+
+#include es lo que se llama una directiva.
+Sirve para indicar al compilador que incluya otro archivo.
+Cuando en compilador se encuentra con esta directiva la sustituye por el archivo indicado.
+En este caso son los archivos _stdio.h_ (que es donde está definida la función printf, que veremos luego) y _stdlib.h_.
+
+[source,c]
+----
+int main()
+----
+
+Es la *_función_* principal del programa.
+Todos los programas de C deben tener una función llamada _main_, que es la que primero se ejecuta.
+
+El _int_ (viene de Integer=Entero) que tiene al principio significa que cuando la función main acabe devolverá un número entero.
+Este valor se suele usar para saber cómo ha terminado el programa.
+Normalmente este valor será 0 si todo ha ido bien, o un valor distinto si se ha producido algún error (pero esto lo decidimos nosotros, ya lo veremos).
+De esta forma si nuestro programa se ejecuta desde otro el programa 'padre' sabe como ha finalizado, si ha habido errores o no.
+
+Se puede usar la definición:
+
+[source,c]
+----
+void main()
+----
+
+que no necesita devolver ningún valor, pero se recomienda la forma con 'int' que es más correcta.
+Es posible que veas muchos ejemplos que uso 'void main' y en los que falta el return 0; del final; el código funciona correctamente pero puede dar un 'warning' (un aviso) al compilar dado que no es una práctica correcta.
+
+[source,c]
+----
+{}
+----
+
+Las _llaves_ indican, entre otras cosas, el comienzo y el final de una función; en este caso la función _main_.
+
+[source,c]
+----
+/* Aquí va el cuerpo del programa */
+----
+
+Esto es un comentario, el compilador lo ignorará.
+Sirve para describir el programa a otros desarrolladores o a nosotros mismos para cuando volvamos a ver el código fuente dentro de un tiempo.
+Conviene acostumbrarse a comentar los programas pero sin abusar de ellos (ya hablaremos sobre esto más adelante).
+
+Los comentarios van encerrados entre /* y */.
+
+Un comentario puede ocupar más de una línea. Por ejemplo el comentario:
+
+[source,c]
+----
+/* Este es un comentario
+que ocupa dos filas */
+----
+
+es perfectamente válido.
+
+[source,c]
+----
+printf( "Hola mundo\n" );
+----
+
+Aquí es donde por fin el programa hace algo que podemos ver al ejecutarlo.
+La función *_printf_* muestra un mensaje por la pantalla.
+
+Al final del mensaje "Hola mundo" puedes ver el símbolo '\n'.
+Éste hace que después de imprimir el mensaje se pase a la línea siguiente. Por ejemplo:
+
+[source,c]
+----
+printf( "Hola mundo\nAdiós mundo" );
+----
+
+mostrará:
+
+----
+Hola mundo
+Adiós mundo
+----
+
+Fíjate en el ";" del final.
+Es la forma que se usa en C para separar una instrucción de otra.
+Se pueden poner varias en la misma línea siempre que se separen por el punto y coma.
+
+[source,c]
+----
+return EXIT_SUCCESS;
+----
+
+Como he indicado antes el programa al finalizar develve un valor entero.
+Este valor se devuelve usando *_return_*.
+El valor devuelto será el que pongamos después de _return_.
+
+En este caso el valor que devolvemos es _EXIT_SUCCESS_, que es una *_constante_* (un valor predefinido que no cambia) que tiene el valor 0.
+
+.¿De dónse sale EXIT_SUCCESS?
+NOTE: El valor de EXIT_SUCCESS está definido en el fichero _stdlib.h_.
+
+¿Y por qué no poner return 0 en lugar de return EXIT_SUCCESS?
+
+Sería perfectamente válido usar un 0 en lugar de EXIT_SUCCESS, pero el programa se entiende mejor usando esta última.
+Cuando lees esa línea ya entiendes, sin ninguna duda, que el programa está termiando con éxito.
+
+...y por fin cerramos llaves con lo que termina el programa.
+Todos los programas finalizan cuando se llega al final de la función _main_.
+
+=== ¿Cómo se hace?
+
+Primero debemos crear el código fuente del programa.
+Para nuestro primer programa el código fuente es el del listado anterior.
+
+.Arranca tu entorno de desarrollo de C, sea cual sea.
+.Crea un nuevo fichero y copia el código anterior.
+.Llámalo, por ejemplo, primero.c.
+.Ahora, tenemos que compilar el programa para crear el ejecutable.
+.Si estás usando un IDE busca una opción llamada "compile", o make, build o algo así.
+
+Si estamos usando el compilador *_gcc_*  sin IDE tenemos que llamarlo desde la línea de comando:
+
+----
+gcc primero.c -o primero
+----
+
+=== Nota adicional sobre los comentarios
+
+Los comentarios se pueden poner casi en cualquier parte. Excepto en medio de una instrucción. Por ejemplo lo siguiente no es válido:
+
+[source,c]
+----
+pri/* Esto es un comentario */ntf( "Hola mundo" );
+----
+
+No podemos cortar a printf por en medio, tendríamos un error al compilar. Lo siguiente puede no dar un error, pero es una fea costumbre:
+
+[source,c]
+----
+printf( /* Esto es un comentario */ "Hola mundo" );
+----
+
+Y por último tenemos:
+
+[source,c]
+----
+printf( "Hola/* Esto es un comentario */ mundo" );
+----
+
+Que no daría error, pero al ejecutar tendríamos:
+
+----
+Hola /* Esto es un comentario */ mundo
+----
+
+porque /* Esto es un comentario */ queda dentro de las comillas y C lo interpreta como texto, no como un comentario.
+
+=== ¿Qué sabemos hacer?
+
+Pues la verdad es que todavía no hemos aprendido mucho.
+Lo único que podemos hacer es compilar nuestros programas.
+Pero paciencia, en seguida avanzaremos.
+
+=== Ejercicios
+
+Busca los errores en este programa:
+
+[source,c]
+----
+int main()
+{
+  /* Aquí va el cuerpo del programa */
+  Printf( "Hola mundo\n" );
+  return 0;
+}
+----
+
+Solución:
+
+Si lo compilamos obtendremos un error que nos indicará que no hemos definido la función 'Printf'.
+Esto es porque no hemos incluído la dichosa directiva '#include <stdio.h>'.
+
+NOTE: En algunos compiladores no es necesario incluir esta directiva, pero es una buena costumbre hacerlo.
+
+Si lo corregimos y volvemos a compilar obtendremos un nuevo error.
+Otra vez nos dice que desconoce 'Printf'.
+Esta vez el problema es el de las mayúsculas que hemos indicado antes.
+Lo correcto es poner _printf_ con minúsculas.
+
+Te habrás fijado que en esta ocasión hemos usado _return 0_ en lugar de _return EXIT_SUCCESS_.
+En realidad ambas son equivalentes puesto que _EXIT_SUCCESS_ tiene el valor 0.
+
+
+== Capítulo 2. Mostrando Información por pantalla.
+
+=== Printf: Imprimir en pantalla
+
+Siempre he creído que cuando empiezas con un nuevo lenguaje suele gustar el ver los resultados, ver que nuestro programa hace 'algo'.
+Por eso creo que el curso debe comenzar con la función *_printf_*, que sirve para sacar información por pantalla.
+Para utilizar la función _printf_ en nuestros programas debemos incluir la directiva:
+
+[source,c]
+----
+#include <stdio.h>
+----
+
+al principio de programa.
+Como hemos visto en el programa hola mundo.
+Si sólo queremos imprimir una cadena basta con hacer (no olvides el ";" al final):
+
+[source,c]
+----
+printf( "Cadena" );
+----
+
+Esto resultará por pantalla:
+
+----
+Cadena
+----
+
+Lo que pongamos entre las comillas es lo que vamos a sacar por pantalla.
+Si volvemos a usar otro _printf_, por ejemplo:
+
+[source,c]
+----
+#include <stdio.h>
+int main() {
+    printf( "Cadena" );
+    printf( "Segunda" );
+    return 0;
+}
+----
+
+Obtendremos:
+
+----
+CadenaSegunda
+----
+
+Este ejemplo nos muestra cómo funciona printf. Para escribir en la pantalla se usa un cursor que no vemos. Cuando escribimos algo el cursor va al final del texto. Cuando el texto llega al final de la fila, lo siguiente que pongamos irá a la fila siguiente. Si lo que queremos es sacar cada una en una línea deberemos usar "\n". Es el indicador de retorno de carro. Lo que hace es saltar el cursor de escritura a la línea siguiente:
+
+[source,c]
+----
+#include <stdio.h>
+
+int main()
+{
+    printf( "Cadena\n" );
+    printf( "Segunda" );
+    return 0;
+}
+----
+
+y tendremos:
+
+----
+Cadena
+Segunda
+----
+
+También podemos poner más de una cadena dentro del printf:
+
+[source,c]
+----
+printf( "Primera cadena" "Segunda cadena" );
+----
+
+Lo que no podemos hacer es meter cosas entre las cadenas:
+
+[source,c]
+----
+printf( "Primera cadena" texto en medio "Segunda cadena" );
+----
+
+esto no es válido. Cuando el compilador intenta interpretar esta sentencia se encuentra _"Primera cadena"_ y luego texto en medio, no sabe qué hacer con ello y da un error.
+Pero ¿qué pasa si queremos imprimir el símbolo _"_ en pantalla? Por ejemplo imaginemos que queremos escribir:
+
+----
+Esto es "raro"
+----
+
+Si hacemos:
+
+[source,c]
+----
+printf( "Esto es "raro"" );
+----
+
+obtendremos unos cuantos errores.
+El problema es que el símbolo " se usa para indicar al compilador el comienzo o el final de una cadena.
+Así que en realidad le estaríamos dando la cadena "Esto es", luego extraño y luego otra cadena vacía "".
+Pues resulta que _printf_ no admite esto y de nuevo tenemos errores.
+
+La solución es usar \". Veamos:
+
+[source,c]
+----
+printf( "Esto es \"extraño\"" );
+----
+
+Esta vez todo irá como la seda.
+Como vemos la contrabarra '\' sirve para indicarle al compilador que escriba caracteres que de otra forma no podríamos.
+Esta contrabarra se usa en C para indicar al compilador que queremos meter símbolos especiales.
+Pero ¿Y si lo que queremos es usar '\' como un carácter normal y poner por ejemplo Hola\Adiós? Pues muy fácil, volvemos a usar '\':
+
+[source,c]
+----
+printf( "Hola\\Adiós" );
+----
+
+y esta doble '\' indica a C que lo que queremos es mostrar una '\'.
+He aquí un breve listado de códigos que se pueden imprimir:
+
+Código
+Nombre
+Significado
+\a
+alert
+Hace sonar un pitido
+\b
+backspace
+Retroceso
+\n
+newline
+Salta a la línea siguiente (salto de línea)
+\r
+carriage return
+Retorno de carro (similar al anterior)
+\t
+horizontal tab
+Tabulador horizontal
+\v
+vertical tab
+Tabulador vertical
+\\
+backslash
+Barra invertida
+\?
+question mark
+Signo de interrogación
+\'
+single quote
+Comilla sencilla
+\"
+double quote
+Comilla doble
+
+Es recomendable probarlas para ver realmente lo que significa cada una.
+
+Esto no ha sido mas que una introducción a printf. Luego volveremos sobre ella.
+
+=== Gotoxy: Posicionando el cursor (requiere conio.h)
+Esta función sólo está disponible en compiladores de C que dispongan de la biblioteca <conio.h>, de hecho, en la mayoría de compiladores para Linux no viene instalada por defecto.
+No debería usarse aunque se menciona aquí porque en muchos cursos de formación profesional y en universidades aún se usa.
+Hemos visto que cuando usamos printf se escribe en la posición actual del cursor y se mueve el cursor al final de la cadena que hemos escrito.
+
+Vale, pero ¿qué pasa cuando queremos escribir en una posición determinada de la pantalla? La solución está en la función gotoxy. Supongamos que queremos escribir 'Hola' en la fila 10, columna 20 de la pantalla:
+
+[source,c]
+----
+#include <stdio.h>
+#include <conio.h>
+
+int main()
+{
+    gotoxy( 20, 10 );
+    printf( "Hola" );
+    return 0;
+}
+----
+
+NOTE: para usar gotoxy hay que incluir la biblioteca conio.h).
+
+Fíjate que primero se pone la columna (x) y luego la fila (y). La esquina superior izquierda  es la posición (1, 1).
+
+=== Clrscr: Borrar la pantalla (requiere conio.h)
+
+Ahora ya sólo nos falta saber cómo se borra la pantalla. Pues es tan fácil como usar:
+
+[source,c]
+----
+clrscr();
+----
+
+(clear screen, borrar pantalla).
+
+Esta función nó solo borra la pantalla, sino que además sitúa el cursor en la posición (1, 1), en la esquina superior izquierda.
+
+[source,c]
+----
+#include <stdio.h>
+#include <conio.h>
+
+int main()
+{
+    clrscr();
+    printf( "Hola" );
+    return 0;
+}
+----
+
+Este método sólo vale para compiladores que incluyan el fichero conio.h. Si tu sistema no lo tiene puedes consultar la sección siguiente.
+
+=== Borrar la pantalla (otros métodos)
+
+Existen otras formas de borrar la pantalla aparte de usar conio.h.
+
+Si usas DOS:
+
+system ("cls"); //Para DOS
+
+Si usas Linux:
+
+system ("clear"); // Para Linux
+
+Otra forma válida para ambos sistemas:
+
+char a[5]={27,'[','2','J',0}; /* Para ambos (en DOS cargando antes ansi.sys) */
+printf("%s",a);
+
+=== ¿Qué sabemos hacer?
+Bueno, ya hemos aprendido a sacar información por pantalla.
+Si quieres puedes practicar con las instrucciones printf, gotoxy y clrscr.
+Lo que hemos visto hasta ahora no tiene mucho secreto, pero ya veremos cómo la función printf tiene mayor complejidad.
+
+=== Ejercicios
+
+*Ejercicio 1:* Busca los errores en el programa (este programa usa conio.h, pero aunque tu compilador no la incluya aprenderás algo con este ejercicio).
+
+[source,c]
+----
+#include <stdio.h>
+int main()
+{
+    ClrScr();
+    gotoxy( 10, 10 )
+    printf( Estoy en la fila 10 columna 10 );
+    return 0;
+}
+----
+
+Solución:
+
+ClrScr está mal escrito, debe ponerse todo en minúsculas, recordemos una vez más que el C diferencia las mayúsculas de las minúsculas. Además no hemos incluído la directiva #include <conio.h>, que necesitamos para usar clrscr() y gotoxy().
+Tampoco hemos puesto el punto y coma (;) después del gotoxy( 10, 10 ). Después de cada instrucción debe ir un punto y coma.
+El último fallo es que el texto del printf no lo hemos puesto entre comillas. Lo correcto sería: printf( "Estoy en la fila 10 columna 10" );
+
+*Ejercicio 2:* Escribe un programa que borre la pantalla y escriba en la primera línea tu nombre y en la segunda tu apellido:
+
+Solución:
+
+[source,c]
+----
+#include <stdio.h>
+#include <conio.h>
+int main()
+{
+    clrscr();
+    printf( "Gorka\n" );
+    printf( "Urrutia" );
+    return 0;
+}
+----
+
+También se podía haber hecho todo de golpe:
+
+[source,c]
+----
+#include <stdio.h>
+#include <conio.h>
+int main()
+{
+    clrscr();
+    printf( "Gorka\nUrrutia" );
+    return 0;
+}
+----
+
+*Ejercicio 3:* Escribe un programa que borre la pantalla y muestre el texto "estoy aqui" en la fila 10, columna 20 de la pantalla.
+
+Solución:
+
+[source,c]
+----
+#include <stdio.h>
+#include <conio.h>
+int main() {
+    clrscr();
+    gotoxy( 20, 10 );
+    printf( "Estoy aqui" );
+    return 0;
+}
+----
+
+== Capítulo 3. Tipos de Datos.
+
+=== Introducción
+
+Cuando usamos un programa es muy importante manejar datos.
+En C podemos almacenar los datos en variables.
+Una variable es una porción de la memoria del ordenador que queda asignada para que nuestro programa pueda almacenar datos.
+El contenido de las variables se puede ver o cambiar en cualquier momento.
+Estas variables pueden ser de distintos tipos dependiendo del tipo de dato que queramos meter.
+No es lo mismo guardar un nombre que un número.
+
+Hay que recordar también que la memoria del ordenador es limitada, así que cuando guardamos un dato, debemos usar sólo la memoria necesaria.
+Por ejemplo si queremos almacenar el número 400 usaremos una variable tipo _int_ (la estudiamos más abajo) que ocupa menos memoria que una variable de tipo _float_.
+Si tenemos un ordenador con 32Mb de RAM parece una tontería ponernos a ahorrar bits (1Mb=1024Kb, 1Kb=1024bytes, 1byte=8bits), pero si tenemos un programa que maneja muchos datos puede no ser una cantidad despreciable.
+Además ahorrar memoria es una buena costumbre.
+
+NOTE: Por si alguno tiene dudas: No hay que confundir la memoria con el espacio en el disco duro.
+Son dos cosas distintas.
+La capacidad de ambos se mide en bytes, y la del disco duro suele ser mayor que la de la memoria RAM.
+La información en la RAM se pierde al apagar el ordenador, la del disco duro permanece.
+Cuando queremos guardar un fichero lo que necesitamos es espacio en el disco duro.
+Cuando queremos ejecutar un programa lo que necesitamos es memoria RAM.
+La mayoría me imagino que ya lo sabéis, pero me he encontrado muchas veces con gente que los confunde).
+
+=== Notas sobre los nombres de las variables
+
+A las variables no se les puede dar cualquier nombre pero siguiendo unas sencillas normas:
+
+* No se pueden poner más que letras de la 'a' a la 'z' (la ñ no vale), números y el símbolo '_'.
+* No se pueden poner signos de admiración, ni de interrogación...
+* El nombre de una variable puede contener números, pero su primer carácter no puede ser un número.
+
+Ejemplos de nombres válidos:
+
+* camiones
+* numero
+* buffer
+* a1
+* j10hola29
+* num_alumnos
+
+Ejemplos de nombres no válidos:
+
+* 1abc
+* nombre?
+* número
+* num/alumnos
+
+Tampoco valen como nombres de variable las palabras reservadas que usa el compilador. Por ejemplo: for, main, do, while.
+Lista de palabras reservadas según el estándar ISO-C90:
+
+----
+auto      double  int       struct
+break     else    long      switch
+case      enum    register  typedef
+char      extern  return    union
+const     float   short     unsigned
+continue  for     signed    void
+default   goto    sizeof    volatile
+do        if      static    while
+----
+
+Por último es interesante señalar que el C distingue entre mayúsculas y minúsculas.
+Por lo tanto:
+
+* Nombre
+* nombre
+* NOMBRE
+
+serían tres variables distintas.
+
+=== El tipo Int
+
+En una variable de este tipo se almacenan números enteros (sin decimales).
+El rango de valores que admite es -32.768 a 32.767.
+
+NOTE: Nota importante: el rango indicado (de -32.768 a 32.767) puede variar de un compilador a otro, en este caso sería un compilador donde el tipo int es de 16 bits.
+
+¿Por qué estos números tan extraños? Esto se debe a los 16 bits mencionados.
+2^16 = 65.536, que dividido por dos nos da 32.768.
+Por lo tanto, en una variable de este tipo podemos almacenar números negativos desde el -32.768 hasta el -1 y números desde el 0 hasta el 32.767.
+
+Cuando definimos una variable lo que estamos haciendo es decirle al compilador que nos reserve una zona de la memoria para almacenar datos de tipo _int_.
+Para guardarla necesitaremos por tanto 16 bits de la memoria del ordenador.
+
+Las variables de tipo int se definen así:
+
+[source,c]
+----
+int número;
+----
+
+Esto hace que declaremos una variable llamada número que va a contener un número entero.
+
+==== ¿Pero dónde se declaran las variables?
+
+Tenemos dos posibilidades, una es declararla como global y otra como local. Por ahora vamos a decir que global es aquella variable que se declara fuera de la función main y local la que se declara dentro.
+
+Variable global:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int x;
+int main()
+{
+}
+----
+
+Variable local:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int x;
+}
+----
+
+La diferencia práctica es que las variables globales se pueden usar en cualquier función (o procedimiento). Las variables locales sólo pueden usarse en el procedimiento en el que se declaran. Como por ahora sólo tenemos el procedimiento (o función, o rutina, o subrutina, como prefieras) main esto no debe preocuparnos mucho por ahora. Cuando estudiemos cómo hacer un programa con más funciones aparte de main volveremos sobre el tema. Sin embargo debes saber que es buena costumbre usar variables locales que globales. Ya veremos por qué.
+
+Podemos declarar más de una variable en una sola línea:
+
+[source,c]
+----
+int x, y;
+----
+
+==== Mostrar variables por pantalla
+
+Vamos a ir un poco más allá con la función _printf_.
+Supongamos que queremos mostrar el contenido de la variable x por pantalla:
+
+[source,c]
+----
+printf( "%i", x );
+----
+
+Suponiendo que x valga 10 (x=10) en la pantalla tendríamos:
+
+----
+10
+----
+
+Empieza a complicarse un poco ¿no?
+Vamos poco a poco.
+¿Recuerdas el símbolo "\" que usábamos para sacar ciertos caracteres?
+Bueno, pues el uso del "%" es parecido.
+"%i" no se muestra por pantalla, se sustituye por el valor de la variable que va detrás de las comillas (%i, de integer=entero en inglés).
+Para ver el contenido de dos variables, por ejemplo x e y, podemos hacer:
+
+[source,c]
+----
+printf( "%i ", x );
+printf( "%i", y );
+----
+
+resultado (suponiendo x=10, y=20):
+
+ 10 20
+
+Pero hay otra forma mejor:
+
+[source,c]
+----
+printf( "%i %i", x, y );
+----
+
+...y así podemos poner el número de variables que queramos.
+Obtenemos el mismo resultado con menos trabajo.
+No olvidemos que por cada variable hay que poner un %i dentro de las comillas.
+
+También podemos mezclar texto con enteros:
+
+[source,c]
+----
+printf( "El valor de x es %i, ¡que bien!\n", x );
+----
+
+que quedará como:
+
+ El valor de x es 10, ¡que bien!
+
+Como vemos %i al imprimir se sustituye por el valor de la variable.
+
+==== A veces %d, a veces %i
+
+Seguramente habrás visto que en ocasiones se usa el modificador %i y otras %d ¿cuál es la diferencia entre ambos? ¿cuál debe usarse?
+En realidad, cuando los usamos en un _printf_ no hay ninguna diferencia, se pueden usar indistintamente.
+La diferencia está cuando se usa con otras funciones como _scanf_ (esta función la estudiaremos más adelante).
+
+Hay varios modificadores para los números enteros:
+
+[cols=3*,options=header]
+|=======================================================
+|Tipo de variable|Descripción|Modificador
+| _int_ | Entero decimal | %i
+| _int_ | Entero decimal | %i
+| _unsigned int_| Entero decimal sin signo | %u
+| _int_ | Entero octal | %o
+| _int_ | Entero hexadecimal | %x
+|=======================================================
+
+Podemos verlos en acción con el siguiente ejemplo:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+     int numero = 13051;
+
+     printf("Decimal usando 'i': %i\n", numero);
+     printf("Decimal usando 'd': %d\n", numero);
+     printf("Hexadecimal: %x\n", numero);
+     printf("Octal: %o\n", numero);
+     return EXIT_SUCCESS;
+}
+
+----
+
+Este ejemplo mostraría:
+
+----
+Decimal usando 'i': 13051
+Decimal usando 'd': 13051
+Hexadecimal: 32fb
+Octal: 31373
+----
+
+==== Asignar valores a variables de tipo int
+
+La asignación de valores es tan sencilla como:
+
+[source,c]
+----
+x = 10;
+----
+
+También se puede dar un valor inicial a la variable cuando se define:
+
+[source,c]
+----
+int x = 15;
+----
+
+También se pueden dar valores iniciales a varias variables en una sola línea:
+
+[source,c]
+----
+int x = 15, y = 20;
+----
+
+Hay que tener cuidado con lo siguiente:
+
+[source,c]
+----
+int x, y = 20;
+----
+
+Podríamos pensar que _x_ e _y_ son igual a 20, pero no es así. La variable _x_ está sin valor inicial y la variable _y: tiene el valor 20.
+
+Veamos un ejemplo para resumir todo:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int x = 10;
+    printf( "El valor inicial de x es %i.\n", x );
+    x = 50;
+    printf( "Ahora el valor de x es %i.\n", x );
+
+    return EXIT_SUCCESS;
+}
+----
+
+Cuya salida será:
+
+----
+El valor inicial de x es 10
+Ahora el valor es 50
+----
+
+.Valores iniciales
+[NOTE]
+====
+¡Importante!
+Antes de usar una variable debemos darle un valor inicial.
+En compiladores nuevos se nos avisa si intentamos usar una variable antes de asignarle un valor inicial.
+En los más viejos no se nos avisa y esto puede dar lugar a errores "lógicos".
+Prueba a cambiar:
+[source,c]
+----
+int x = 10;
+----
+por:
+[source,c]
+----
+int x;
+----
+====
+
+=== El tipo Char
+
+Las variables de tipo char se puede usar para almacenar caracteres.
+Los caracteres se almacenan en realidad como números del 0 al 255.
+Los 128 primeros (0 a 127) son el ASCII estándar.
+El resto es el ASCII extendido y depende del idioma y del ordenador.
+Consulta la tabla ASCII en el anexo (más información sobre los caracteres ASCII: http://es.wikipedia.org/wiki/Ascii).
+
+Para declarar una variable de tipo char hacemos:
+
+[source,c]
+----
+char letra;
+----
+
+En una variable char sólo podemos almacenar solo una letra, no podemos almacenar ni frases ni palabras.
+Eso lo veremos más adelante (strings, cadenas).
+Para almacenar un dato en una variable _char_ tenemos dos posibilidades:
+
+[source,c]
+----
+letra = 'A';
+----
+
+o:
+
+[source,c]
+----
+letra = 65;
+----
+
+En ambos casos se almacena la letra 'A' en la variable.
+Esto es así porque el código ASCII de la letra 'A' es el 65.
+
+Para imprimir un _char_ usamos el símbolo _%c_ (c de character=carácter en inglés):
+
+[source,c]
+----
+letra = 'A';
+printf( "La letra es: %c.", letra );
+----
+
+resultado:
+
+----
+La letra es A.
+----
+
+También podemos imprimir el valor ASCII de la variable usando %i en vez de %c:
+
+[source,c]
+----
+letra = 'A';
+printf( "El número ASCII de la letra %c es: %i.", letra, letra );
+----
+
+resultado:
+
+----
+El código ASCII de la letra A es 65.
+----
+
+Como vemos la única diferencia para obtener uno u otro es el modificador (%c ó %i) que usemos.
+Las variables tipo char se pueden usar (y de hecho se usan mucho) para almacenar enteros.
+Si necesitamos un número pequeño (entre -128 y 127) podemos usar una variable char (8bits) en vez de una int (16bits), con el consiguiente ahorro de memoria.
+Todo lo demás dicho para los datos de tipo “int” se aplica también a los de tipo “char”.
+
+Una curiosidad:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    char letra = 'A';
+    printf( "La letra es: %c y su valor ASCII es: %i.\n", letra,
+    letra );
+    letra = letra + 1;
+    printf( "Ahora es: %c y su valor ASCII es: %i.\n", letra, letra );
+
+    return EXIT_SUCCESS;
+}
+----
+
+En este ejemplo letra comienza con el valor 'A', que es el código ASCII 65.
+Al sumarle 1 pasa a tener el valor 66, que equivale a la letra 'B' (código ASCII 66).
+La salida de este ejemplo sería:
+
+----
+La letra es A y su valor ASCII es 65
+Ahora es B y su valor ASCII es 66
+----
+
+=== El modificador Unsigned
+
+Este modificador (que significa sin signo) modifica el rango de valores que puede contener una variable.
+Solo admite valores positivos. Si hacemos:
+
+[source,c]
+----
+unsigned char variable;
+----
+
+Esta variable en vez de tener un rango de -128 a 127 pasa a tener un rango de 0 a 255.
+Los indicadores de signo _signed_ y _unsigned_ solo pueden aplicarse a los tipos enteros.
+El primero indica que el tipo puede almacenar tanto valores positivos como negativos y el segundo indica que solo se admiten valores no negativos, esto es, solo se admite el cero y valores positivos.
+Si se declara una variable de tipo short, int o long sin utilizar un indicador de signo esto es equivalente a utilizar el indicador de signo signed.
+Por ejemplo:
+
+[source,c]
+----
+signed int i;
+int j;
+----
+
+Declara dos variables de tipo _signed int_.
+
+La excepcion es el tipo *_char_*.
+Cuando se declara una variable de tipo char sin utilizar un indicador de signo si esta variable es equivalente a signed char o a unsigned char depende del compilador que estemos utilizando.
+Por lo mismo si debemos tener total certeza de que nuestras variables de tipo char puedan almacenar (o no) valores negativos es mejor indicarlo explicitamente utilizando ya sea signed char o unsigned char.
+
+=== El tipo Float
+
+En este tipo de variable podemos almacenar números decimales, no sólo enteros como en los anteriores. El mayor número que podemos almacenar en un float es 3,4E38 y el más pequeño 3,4E-38.
+¿Qué significa 3,4E38? Esto es equivalente a 3,4 * 10^38, que es el número:
+340.000.000.000.000.000.000.000.000.000.000.000.000
+El número 3,4E-38 es equivalente a 3,4 * 10^-38, vamos un número muy, muy pequeño.
+
+Declaración de una variable de tipo float:
+
+[source,c]
+----
+float número;
+----
+
+Para imprimir valores tipo float Usamos %f.
+
+[source,c]
+----
+int main()
+{
+    float num=4060.80;
+    printf( "El valor de num es : %f", num );
+}
+----
+
+Resultado:
+
+----
+El valor de num es: 4060.80
+----
+
+Si queremos escribirlo en notación exponencial usamos %e:
+
+[source,c]
+----
+float num = 4060.80;
+printf( "El valor de num es: %e", num );
+----
+
+Que da como resultado:
+
+----
+El valor de num es: 4.06080e003
+----
+
+=== El tipo Double
+
+En las variables tipo double se almacenan números reales.
+El mayor número que se pueda almacenar es el 1,7E308 y el más pequeño del 1,7E-307.
+Se declaran como double:
+
+[source,c]
+----
+double número;
+----
+
+Para imprimir se usan los mismos modificadores que en float.
+
+==== Números decimales ¿float o double?
+
+Cuando escribimos un número decimal en nuestro programa, por ejemplo 10.30, ¿de qué tipo es? ¿float o double?
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    printf( "%f\n", 10.30 );
+    return EXIT_SUCCESS;
+}
+----
+
+Por defecto, si no se especifica nada, las constantes son de tipo double. Para especificar que queremos que la constante sea float debemos especificar el sufijo “f” o “F”. Si queremos que la constante sea de tipo long double usamos el sufijo “l” o “L”.
+Veamos el siguiente programa:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    float num;
+
+    num = 10.20 * 20.30;
+
+    return EXIT_SUCCESS;
+}
+----
+
+En este caso, ya que no hemos especificado nada, tanto 10.20 como 20.30 son de tipo double.
+La operación se hace con valores de tipo double y luego se almacena en un float.
+Al hacer una operación con double tenemos mayor precisión que con floats, sin embargo es innecesario, ya que en este caso al final el resultado de la operación se almacena en un float, de menor precisión.
+El programa sería más correcto así:
+
+[source,c]
+----
+int main()
+{
+  float num;
+  num = 10.20f * 20.30f;
+}
+----
+
+=== Cómo calcular el máximo valor que admite un tipo de datos
+
+Lo primero que tenemos que conocer es el tamaño en bytes de ese tipo de dato. Vamos a ver un ejemplo con el tipo INT. Hagamos el siguiente programa:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    printf( "El tipo int ocupa %lu bytes\n", sizeof(int) );
+    return EXIT_SUCCESS;
+}
+----
+
+NOTE: En este caso usamos el modificador _%lu_ porque _sizeof()_ devuelve un valor del tipo _long unsigned int_.
+
+La función sizeof() calcula el tamaño en bytes de una variable o un tipo de datos.
+En mi ordenador el resultado era (en tu ordenador podría ser diferente):
+
+----
+El tipo int ocupa 4 bytes.
+----
+
+Como sabemos 1 byte = 8 bits. Por lo tanto el tipo int ocupa 4*8=32 bits.
+Ahora para calcular el máximo número debemos elevar 2 al número de bits obtenido.
+En nuestro ejemplo: 2^32=4.294.967.296. Es decir en un int se podrían almacenar 4.294.967.296 números diferentes.
+
+El número de valores posibles y únicos que pueden almacenarse en un tipo entero depende del número de bits que lo componen y esta dado por la expresión 2^N donde N es el número de bits.
+Si usamos un tipo unsigned (sin signo, se hace añadiendo la palabra unsigned antes de int) tenemos que almacenar números positivos y negativos.
+
+Así que de los 4.294.967.296 posibles números la mitad serán positivos y la mitad negativos.
+Por lo tanto tenemos que dividir el número anterior entre 2 = 2.147.483.648.
+Como el 0 se considera positivo el rango de números posibles que se pueden almacenar en un int sería: -2.147.483.648 a 2.147.483.647.
+
+=== El fichero <limits.h>
+
+Existe un fichero llamado limits.h en el directorio includes de nuestro compilador (sea cual sea) en el que se almacena la información correspondiente a los tamaños y máximos rangos de los tipos de datos char, short, int y long (signed y unsigned) de nuestro compilador.
+Se recomienda como curiosidad examinar este fichero.
+
+=== Overflow: Qué pasa cuando nos saltamos el rango
+
+El overflow es lo que se produce cuando intentamos almacenar en una variable un número mayor del máximo permitido.
+El comportamiento es distinto para variables de números enteros y para variables de números en coma flotante.
+
+==== Con números enteros
+Supongamos que en nuestro ordenador el tipo int es de 32 bits.
+El número máximo que se puede almacenar en una variable tipo int es por tanto 2.147.483.647 (ver apartado anterior).
+Si nos pasamos de este número el que se guardará será el siguiente pero empezando desde el otro extremo, es decir, el -2.147.483.648.
+El compilador seguramente nos dará un aviso (warning) de que nos hemos pasado.
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int num1;
+
+    num1 = 2147483648;
+    printf( "El valor de num1 es: %i\n", num1 );
+
+    return EXIT_SUCCESS;
+}
+----
+
+El resultado que obtenemos es:
+
+----
+El valor de num1 es: -2147483648
+----
+
+Comprueba si quieres que con el número anterior (2.147.483.647) no pasa nada.
+
+==== Con números en coma flotante
+
+El comportamiento con números en coma flotante es distinto.
+Dependiendo del ordenador si nos pasamos del rango al ejecutar un programa se puede producir un error y detenerse la ejecución.
+Con estos números también existe otro error que es el underflow.
+Este error se produce cuando almacenamos un número demasiado pequeño (3,4E-38 en float).
+
+=== Los tipos short int, long int y long double
+
+Existen otros tipos de datos que son variaciones de los anteriores que son: short int, long int, long long y long double.
+
+En realidad, dado que el tamaño de los tipos depende del compilador, lo único que nos garantiza es que:
+
+* El tipo long long no es menor que el tipo int.
+* El tipo long no es menor que el tipo int.
+* El tipo int no es menor que el tipo short.
+
+=== Resumen de los tipos de datos en C
+
+Los números en C se almacenan en variables llamadas “de tipo aritmético”.
+Estas variables a su vez se dividen en variables de tipos enteros y de tipos en coma flotante.
+Los tipos enteros son char, short int, int y long int.
+Los tipos short int y long int se pueden abreviar a solo short y long.
+Esto es algo orientativo, depende del sistema.
+
+Por ejemplo en un sistema de 16 bits podría ser algo así:
+
+[cols=5*,options=header]
+|===
+| Tipo
+| Datos almacenados
+| Nº de Bits
+| Valores posibles (Rango)
+| Rango usando unsigned
+
+| char
+| Caracteres y enteros pequeños
+| 8
+| -128 a 127
+| 0 a 255
+
+| int
+| Enteros
+| 16
+| -32.768 a 32.767
+| 16  0 a 65.535
+
+| long
+| Enteros largos
+| 32
+| -2.147.483.648 a 2.147.483.647
+| 0 a 4.294.967.295
+
+| float
+| Números reales (coma flotante)
+| 32
+| 3,4E-38 a 3,4E38
+| No se aplica
+
+| double
+| Números reales (coma flotante doble)
+| 64
+| 1,7E-307 a 1,7E308
+| No se aplica
+|===
+
+Como hemos mencionado antes esto no siempre es cierto, depende del ordenador y del compilador. Para saber en nuestro caso qué tamaño tienen nuestros tipos de datos debemos hacer lo siguiente.
+
+Ejemplo para int:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    printf( "Tamaño (en bits) de int = %i\n", sizeof( int )*8 );
+
+    return EXIT_SUCCESS;
+}
+----
+
+Ya veremos más tarde lo que significa sizeof.
+Por ahora basta con saber que nos dice cual es el tamaño de una variable o un tipo de dato.
+
+=== Ejercicios
+
+*Ejercicio 1:* Busca los errores:
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int número;
+    número = 2;
+    return EXIT_SUCCESS;
+}
+----
+
+*Solución:* Los nombres de variables no pueden llevar acentos, luego al compilar número dará error.
+
+[source,c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int número;
+    número = 2;
+    printf( "El valor es %i" número );
+    return EXIT_SUCCESS;
+}
+----
+
+*Solución:* Falta la coma después de "El valor es %i".
+Además la segunda vez número está escrito con mayúsculas.
+
+Capítulo 4. Constantes (uso de #define).
+Introducción
+Las constantes son aquellos datos que no pueden cambiar a lo largo de la ejecución de un programa.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+
+ double radio, perimetro;
+
+ radio = 20;
+ perimetro = 2 * 3.1416 * radio;
+ printf( "El perimetro es: %f", perimetro );
+ return EXIT_SUCCESS;
+
+}
+radio y perimetro son variables, su valor puede cambiar a lo largo del programa. Sin embargo 20, 2 y 3.1416 son constantes, no hay manera de cambiarlas. El valor 3.1416 no cambia a lo largo del programa, ni entre ejecución y ejecución. Solo cambiará cuando edites el programa y lo cambies tu mismo. En resumen, cuando escribimos directamente un número se le llama una constante.
+
+Tipos de datos en las constantes
+En el capítulo anterior vimos que las existen diferentes tipos de datos para las variables. Las constantes también tienen tipos de datos. Recordemos que especificábamos el tipo de dato de la variable usando int, float, double y otros. Con las constantes indicamos el tipo dependiendo del sufijo que empleemos después de la constante. Veamos unos ejemplos:
+
+a = 100; /* 100 es de tipo signed int */
+b = 200U; /* 200U es de tipo unsigned int */
+c = 300L; /* 300L es de tipo signed long */
+d = 400UL; /* 400UL es de tipo unsigned long */
+Pero ¿para qué queremos indicar el tipo de dato de una constante? Al fin y al cabo son todos números. Veremos más adelante que es muy importante, sobre todo a la hora de hacer ciertas operaciones matemáticas.
+
+Constantes en base 10 sin parte fraccionaria
+Note
+NOTA
+Los números en base 10 son los que llamamos decimales. Se llaman así porque los números se pueden representar usando como base el 10:
+
+3.284 = 3x1000 + 2x100 + 8x10 + 4 = 3x103 + 2x102 + 8x101
+4x100
+
+Recordemos que también hay números binarios (en base 2), hexadecimales y octales.
+
+Las constantes en base 10 y sin fracción ni exponente son de tipo signed int.
+
+¿Y que pasa si una constante "no cabe" en el tipo indicado?
+
+Supongamos un ordenador de 16 bits donde el valor máximo que se puede almacenar en el tipo int es 32.767 y (por poner un ejemplo) en nuestro programa tenemos:
+
+int a = 32768; /* recordemos 32768 "no cabe" en un int de 16 bits. */
+¿Que es lo que sucede?
+
+Cuando el número no cabe en el tipo que se está indicando (en este caso no se indica nada así que se considera como un tipo int) se comprueba si cabe en el siguiente tipo de dato. Si tampoco cabe se prueba con el siguiente. El orden que se sigue es:
+
+int
+
+long
+
+unsigned long
+
+Debido a que en nuestro ejemplo 32.768 no cabe en un int se comprueba con el tipo signed long. Si en éste tampoco cabe se considera que el tipo de la constante es unsigned long.
+
+Si la constante en cuestión tiene uno de los dos sufijos 'U' o 'L' el tipo a utilizar se restringe (limita) y selecciona en este orden:
+
+A) En el caso de utilizar 'U':
+
+unsigned int
+
+unsigned long
+
+B) En el caso de utilizar 'L':
+
+signed long
+
+unsigned long
+
+Constantes en base 10 y con decimales
+Las constantes en base 10 y con un punto decimal y/o exponente son de tipo double.
+
+Algunos ejemplos:
+
+a = 100.0; /* 100.0 es de tipo 'double' */
+b = 10E2; /* 10E2 es de tipo 'double' */
+Nota técnica:
+
+Las constantes de punto flotante son de tipo double a menos que se utilice uno de estos sufijos ya sea en minúsculas o mayúsculas:
+
+El sufijo 'F' indica que la constante es de tipo float.
+
+El sufijo 'L' indica que la constante es de tipo long double.
+
+Solo se puede utilizar uno de estos sufijos pero no ambos.
+
+Algunos ejemplos:
+
+a = 100.0F /* 100.0F es de tipo float */
+b = 200.0 /* 200.0 es de tipo double */
+c = 300.0L /* 300.0L es de tipo long double */
+Constantes con nombre
+Imagina el siguiente programa:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+
+  float precio;
+
+  precio = ( 4 * 25 * 100 ) * ( 1.16 );
+
+  printf( "El precio total es: %f", precio );
+
+  return EXIT_SUCCESS;
+
+}
+Es un programa sencillo y que funciona bien. Sin embargo ¿qué sentido tienen los números 4, 25, 100 y 1,16? Es difícil saberlo. Es bastante habitual escribir un programa así, volver a echarle un vistazo unos meses más tarde y no recordar qué eran esos números.
+
+Ahora mira este otro programa:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define CAJAS 4
+#define UNIDADES_POR_CAJA 25
+#define PRECIO_POR_UNIDAD 100
+#define IMPUESTOS 1.16
+
+int main()
+{
+
+ float precio;
+
+ precio =
+ ( CAJAS * UNIDADES_POR_CAJA * PRECIO_POR_UNIDAD ) *
+ ( IMPUESTOS );
+
+ printf( "El precio total es: %f", precio );
+ return EXIT_SUCCESS;
+
+}
+Ahora todos los números tienen un significado claro. Es porque esta vez estamos usando constantes con nombre.
+
+#define es lo que se llama una directiva. Estas directivas se utilizan, entre otras cosas, para definir constantes. Los usos de #define y de otras directivas los veremos en el capítulo de directivas.
+
+Las constantes, una vez definidas, no pueden cambiar su valor. No son como las variables. Cuando hacemos:
+
+#define CAJAS 4
+estamos diciendo que, dentro de nuestro programa, donde aparezca la palabra CAJAS hay que sustituirlo por el valor 4.
+
+Para definir constantes hay que seguir unas sencillas normas:
+
+Sólo se puede definir una constante por línea.
+
+No llevan ';' al final.
+
+Se suelen escribir en mayúsculas aunque no es obligatorio.
+
+También podemos definir una constante usando el valor de otras. Por supuesto las otras tienen que estar definidas antes:
+
+#include <stdio.h>
+#include <stdio.h>
+
+#define CAJAS 4
+#define UNIDADES_POR_CAJA 25
+#define PRECIO_POR_UNIDAD 100
+#define PRECIO_POR_CAJA UNIDADES_POR_CAJA * PRECIO_POR_UNIDAD
+#define IMPUESTOS 1.16
+
+int main()
+
+{
+
+  float precio;
+
+  precio = ( CAJAS * PRECIO_POR_CAJA ) * ( IMPUESTOS );
+
+  printf( "El precio total es: %f", precio );
+
+  return EXIT_SUCCESS;
+
+}
+
+
+Capítulo 9. Punteros
+Introducción
+Este capítulo puede resultar problemático a aquellos que no han visto nunca lo que es un puntero. Por lo tanto si tienes alguna duda o te parece que alguna parte está poco clara ponte en contacto conmigo.
+
+¡¡¡Punteros!!! uff. Este es uno de los temas que más suele costar a la gente al aprender C. Los punteros son una de las más potentes características de C, pero a la vez uno de sus mayores peligros. Si no se manejan con cuidado pueden ser una fuente ilimitada de errores. Un error usando un puntero puede bloquear el sistema y a veces puede ser difícil detectarlo.
+
+Otros lenguajes no nos dejan usar punteros para evitar estos problemas, pero a la vez nos quitan parte del control que tenemos en C.
+
+A pesar de todo esto no hay que tenerles miedo. Casi todos los programas C usan punteros. Si aprendemos a usarlos bien no tendremos más que algún problema esporádico. Así que atención, valor y al toro.
+
+La memoria del ordenador
+Si tienes bien claro lo que es la memoria del ordenador puedes saltarte esta sección. Pero si confundes la memoria con el disco duro o no tienes claro lo que es no te la pierdas.
+
+A lo largo de mi experiencia con ordenadores me he encontrado con mucha gente que no tiene claro cómo funciona un ordenador. Cuando hablamos de memoria nos estamos refiriendo a la memoria RAM del ordenador. Son unas pastillas que se conectan a la placa base y nada tienen que ver con el disco duro. El disco duro guarda los datos permanentemente (hasta que se rompe) y la información se almacena como ficheros. Nosotros podemos decirle al ordenador cuándo grabar, borrar, abrir un documento, etc. La memoria RAM en cambio, se borra al apagar el ordenador. La memoria RAM la usan los programas sin que el usuario de éstos se de cuenta.
+
+Hay otras memorias en el ordenador aparte de la mencionada. Por ejemplo la memoria de vídeo (que está en la tarjeta gráfica), las memorias caché (del procesador, de la placa…​).
+
+Direcciones de variables
+Vamos a ir como siempre por partes. Primero vamos a ver qué pasa cuando declaramos una variable.
+
+Al declarar una variable estamos diciendo al ordenador que nos reserve una parte de la memoria para almacenarla. Cada vez que ejecutemos el programa la variable se almacenará en un sitio diferente. Eso no lo podemos controlar, depende de la memoria disponible y otros factores "misteriosos". Puede que se almacene en el mismo sitio, pero es mejor no fiarse.
+
+Dependiendo del tipo de variable que declaremos el ordenador nos reservará más o menos memoria. Como vimos en el capítulo de tipos de datos cada tipo de variable ocupa más o menos bytes. Por ejemplo si declaramos un char, el ordenador nos reserva 1 byte (usualmente 8 bits). Una variable de tipo int ocupará más espacio (depende del compilador y el sistema en el que trabajemos).
+
+Cuando finaliza el programa todo el espacio reservado para las variables queda libre para ser usado por otros programas.
+
+Note
+Si bien usualmente un carácter (char) esta constituido por ocho bits esto no lo garantiza el estándar. El numero exacto esta dado por la macro CHAR_BIT).
+Saber cuánto ocupa un carácter en tu sistema es imporante. Para saberlo puedes usar este sencillo programa:
+
+#include <stdio.h>
+#include <limits.h>
+#include <stdlib.h>
+
+int main()
+{
+  printf("Bits que ocupa un carácter: %d", CHAR_BIT);
+
+  return EXIT_SUCCESS;
+}
+Existe una forma de saber qué direcciones nos ha reservado el ordenador para nuestras variables. Se trata de usar el operador & (operador de dirección). Ya lo habíamos visto en el scanf pero no sabíamos bien para qué era. Vamos a ver un ejemplo: Declaramos la variable 'a' y obtenemos su valor y dirección.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  char a;
+
+  a = 10;
+
+  printf( "La variable 'a' se almacena en la posición de memoria %p ", (void *) &a );
+  printf( "y su valor es %d\n.", a );
+
+  return EXIT_SUCCESS;
+}
+Note
+Para mostrar la dirección de la variable usamos %p (en lugar de %d). Éste modificador de formato sirve para escribir direcciones de memoria. El formato que se usa para mostrar las direcciones de memoria es el hexadecimal.
+El resultado sería algo como:
+
+La variable a se almacena en la posición de memoria 0x7fff13be7627 y su valor es 10.
+Si ejecutamos el programa varias veces seguidas veremos algo curioso:
+
+El valor de a siempre es el mismo.
+
+Pero la posición de la memoria donde se almacena la variable cambia cada vez.
+
+La segunda vez pude mostrar algo como ésto:
+
+La variable a se almacena en la posición de memoria 0x7fff8e74c037 y su valor es 10.
+Y la tercera:
+
+La variable a se almacena en la posición de memoria 0x7ffc79a200a7 y su valor es 10.
+Como podemos ver, cada vez que ejecutamos el programa la dirección de la memoria donde se almacena a es diferente. Pero una vez el sistema nos ha reservado esa dirección ya no cambia durante la ejecución del programa.
+
+El valor de a lo podemos controlar nosotros. El valor de la memoria que nos asigna el sistema podemos conocerlo pero no controlarlo.
+
+Es importante tener clara la diferencia entre el valor de a y el valor de la memoria donde se almacena a.
+
+El nombre de la variable es equivalente a poner un nombre a una zona de la memoria. Cuando en el programa escribimos 'a', en realidad estamos diciendo, "el valor que está almacenado en la dirección de memoria a la que llamamos 'a'".
+
+Qué son los punteros
+Ahora ya estamos en condiciones de ver lo que es un puntero. Un puntero es una variable un tanto especial. Con un puntero podemos almacenar direcciones de memoria. En un puntero podemos tener guardada la dirección de una variable.
+
+Vamos a ver si captamos bien el concepto de puntero y la diferencia entre éstos y las variables normales.
+
+image
+
+En el dibujo anterior tenemos una representación de lo que sería la memoria del ordenador. Cada casilla representa un byte de la memoria. Y cada número es su dirección de memoria. La primera casilla es la posición 00001 de la memoria. La segunda casilla la posición 00002 y así sucesivamente.
+
+Supongamos que ahora declaramos una variable char:
+
+char numero = 43.
+El ordenador nos guardaría por ejemplo la posición 00003 para esta variable. Esta posición de la memoria queda reservada y ya no la puede usar nadie más. Además esta posición a partir de ahora se le llama numero. Como le hemos dado el valor 43 a numero, el valor 43 se almacena en numero, es decir, en la posición 00003.
+
+image
+
+Veamos cómo hubiera sido el resultado del programa anterior con esta situación:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  char numero;
+
+  numero = 43;
+
+  printf( "La variable numero " );
+  printf( "se almacena en la posición de memoria %p,", (void *) &numero );
+  printf( "y su valor es %d\n", numero );
+
+  return EXIT_SUCCESS;
+}
+El resultado sería:
+
+La variable numero se almacena en la posición de memoria *00003*, y su
+valor es *43*
+Creo que así ya está clara la diferencia entre el valor de una variable (43) y su dirección (00003).
+
+Ahora vamos un poco más allá, vamos a declarar un puntero. Hemos dicho que un puntero sirve para almacenar la direcciones de memoria. Muchas veces los punteros se usan para guardar las direcciones de variables. Vimos en el capítulo Tipos de Datos que cada tipo de variable ocupa un espacio distinto en la memoria. Por eso cuando declaramos un puntero debemos especificar el tipo de datos cuya dirección almacenará. En nuestro ejemplo queremos que almacene la dirección de una variable char. Así que para declarar el puntero punt debemos hacer:
+
+char *punt;
+El * (asterisco) sirve para indicar que se trata de un puntero, debe ir antes del nombre de la variable.
+
+NOTA: El lenguaje C es un lenguaje de "formato libre" y la declaración de la variable "punt" podría realizarse en cualquiera de estas formas, todas ellas validas:
+
+char*punt; +
+char* punt; +
+char * punt; +
+char *punt; +
+char +
+* +
+punt;
+En la variable punt sólo se pueden guardar direcciones de memoria, no se pueden guardar datos. Vamos a volver sobre el ejemplo anterior un poco ampliado para ver cómo funciona un puntero:
+
+#include <stdio.h> #include <stdlib.h>
+
+int main()
+
+\{
+
+char numero;
+char *punt;
+numero = 43;
+punt = &numbero;
+ printf( "La variable numero se almacena en la posición de memoria %p, y
+su valor es %d\n", (void *) &numero, numero );
+return EXIT_SUCCESS;
+}
+
+Vamos a ir línea a línea:
+
+En el primer int numero reservamos memoria para numero (supongamos que queda como antes, posición 00003). Por ahora numero no tiene ningún valor.
+
+Siguiente línea: int *punt;. Reservamos una posición de memoria para almacenar el puntero, por ejemplo en la posición 00004. Por ahora punt no tiene ningún valor, es decir, no apunta a ninguna variable. Esto es lo que tenemos por ahora:
+
+image
+
+Tercera línea: numero = 43;. Aquí ya estamos dando el valor 43 a numero. Se almacena 43 en la dirección 00003, que es la de numero.
+
+Cuarta línea: punt = &numero;. Por fin damos un valor a punt. El valor que le damos es la dirección de numero (ya hemos visto que & devuelve la dirección de una variable). Así que punt tendrá como valor la dirección de numero, 00003. Por lo tanto ya tenemos:
+
+image
+
+Cuando un puntero tiene la dirección de una variable se dice que ese puntero apunta a esa variable.
+
+*NOTA:* La declaración de un puntero depende del tipo de dato al que queramos apuntar. En general la declaración es:
+
+tipo_de_dato *nombre_del_puntero;
+
+Si en vez de querer apuntar a una variable tipo char como en el ejemplo hubiese sido de tipo int:
+
+int *punt;
+
+Para qué sirve un puntero y cómo se usa
+Los punteros tienen muchas utilidades, por ejemplo nos permiten pasar variables a una función y modificarlos. También permiten el manejo de cadenas de texto de arrays, de ficheros y de listas enlazadas (ya veremos todo esto más adelante). Otro uso es que nos permiten acceder directamente a la pantalla, al teclado y a todos los componentes del ordenador (sólo en determinados sistemas operativos).
+
+Pero si sólo sirvieran para almacenar direcciones de memoria no servirían para mucho. Nos deben dejar también la posibilidad de acceder a esas posiciones de memoria. Para acceder a ellas se usa el operador *, que no hay que confundir con el de la multiplicación.
+
+#include <stdio.h> #include <stdlib.h>
+
+int main()
+
+\{
+
+char numero;
+char *punt;
+numero = 43;
+punt = &numero;
+ printf( "La variable numero se almacena en la posición de memoria %p, y
+su valor es %d.\n",
+(void *) &numero, **punt* );
+return EXIT_SUCCESS;
+}
+
+Si nos fijamos en lo que ha cambiado con respecto al ejemplo anterior, vemos que para acceder al valor de número usamos *punt en vez de numero. Esto es así porque punt apunta a numero y *punt nos permite acceder al valor al que apunta punt.
+
+#include <stdio.h> #include <stdlib.h>
+
+int main()
+
+\{
+
+char numero;
+char *punt;
+numero = 43;
+punt = &numero;
+**punt = 30;*
+ printf( "La variable numero se almacena en la posición de memoria %p, y
+su valor es %d.\n", (void *) &numero, numero );
+return EXIT_SUCCESS;
+}
+
+Ahora hemos cambiado el valor de numero a través de *punt.
+
+En resumen, usando punt podemos apuntar a una variable y con *punt vemos o cambiamos el contenido de esa variable.
+
+Un puntero no sólo sirve para apuntar a una variable, también sirve para apuntar una dirección de memoria determinada. Esto tiene muchas aplicaciones, por ejemplo nos permite controlar el hardware directamente (en MS-Dos y Windows, no en Linux). Podemos escribir directamente sobre la memoria de vídeo y así escribir directamente en la pantalla sin usar printf.
+
+Usando punteros en una comparación
+Veamos el siguiente ejemplo. Queremos comprobar si dos variables son iguales usando punteros:
+
+#include <stdio.h> #include <stdlib.h>
+
+int main()
+
+\{
+
+int a, b;
+int *punt1, *punt2;
+a = 5; b = 5;
+punt1 = &a; punt2 = &b;
+if ( punt1 == punt2 )
+printf( "Son iguales.\n" );
+return EXIT_SUCCESS;
+}
+
+Alguien podría pensar que el if se cumple y se mostraría el mensaje Son iguales en pantalla. Pues no es así, el programa es erróneo. Es cierto que a y b son iguales. También es cierto que punt1 apunta a 'a' y punt2 a 'b'. Lo que queríamos comprobar era si a y b son iguales. Sin embargo con la condición estamos comprobando si punt1 apunta al mismo sitio que punt2, estamos comparando las direcciones donde apuntan. Por supuesto a y b están en distinto sitio en la memoria así que la condición es falsa. Para que el programa funcionara deberíamos usar los asteriscos:
+
+#include <stdio.h> #include <stdlib.h>
+
+int main()
+
+\{
+
+int a, b;
+int *punt1, *punt2;
+a = 5; b = 5;
+punt1 = &a; punt2 = &b;
+if ( **punt1 == *punt2* )
+printf( "Son iguales.\n" );
+return EXIT_SUCCESS;
+}
+
+Ahora sí. Estamos comparando el contenido de las variables a las que apuntan punt1 y punt2. Debemos tener mucho cuidado con esto porque es un error que se nos puede escapar con mucha facilidad.
+
+Vamos a cambiar un poco el ejemplo. Ahora 'b' no existe y punt1 y punt2 apuntan a 'a'. La condición se cumplirá porque apuntan al mismo sitio.
+
+#include <stdio.h> #include <stdlib.h>
+
+int main()
+
+\{
+
+int a;
+int *punt1, *punt2;
+a = 5;
+*punt1 = &a; punt2 = &a;*
+if ( punt1 == punt2 )
+printf( "punt1 y punt2 apuntan al mismo sitio.\n" );
+return EXIT_SUCCESS;
+}
+
+Punteros como argumentos de funciones
+Hemos visto en el capítulo de funciones cómo pasar parámetros y cómo obtener resultados de las funciones (con los valores devueltos con return). Pero tiene un inconveniente, sólo podemos tener un valor devuelto. Ahora vamos a ver cómo los punteros nos permiten modificar varias variables en una función.
+
+Hasta ahora para pasar una variable a una función hacíamos lo siguiente:
+
+#include <stdio.h> #include <stdlib.h>
+
+int suma( int a, int b )
+
+\{
+
+return a+b;
+}
+
+int main()
+
+\{
+
+int var1, var2, resultado;
+var1 = 5; var2 = 8;
+resultado = suma(var1, var2);
+printf( "La suma es : %i\n", resultado );
+return EXIT_SUCCESS;
+}
+
+Aquí hemos pasado a la función los parámetros 'a' y 'b' (que no podemos modificar) y nos devuelve la suma de ambos.
+
+Vamos a modificar el ejemplo para que use punteros:
+
+#include <stdio.h> #include <stdlib.h>
+
+void suma( int a, int b, int *total )
+
+\{
+
+*total = a + b;
+}
+
+int main()
+
+\{
+
+int var1, var2, resultado;
+var1 = 5; var2 = 8;
+suma(var1, var2, &resultado);
+printf( "La suma es: %d.\n", resultado );
+return EXIT_SUCCESS;
+}
+
+Como podemos ver la función ya no devuelve un valor, pero le hemos añadido un tercer parámetro int *total. Este parámetro es un puntero que va a recibir la dirección donde se almacena resultado (&resultado) y va a guardar ahí el resultado de la suma. Cuando finalice la función y volvamos a la función main la variable resultado se encontrará con que tiene como valor la suma de los dos números.
+
+Supongamos ahora que queremos tener la suma pero además queremos que var1 se haga cero dentro de la función. Para eso haríamos lo siguiente:
+
+#include <stdio.h> #include <stdlib.h>
+
+int suma_y_cambia( int *a, int b )
+
+\{
+
+int c;
+c = *a + b;
+*a = 0;
+return c;
+}
+
+int main()
+
+\{
+
+int var1, var2, resultado;
+var1 = 5; var2 = 8;
+resultado = suma_y_cambia(*&var1*, var2);
+printf( "La suma es: %d y var1 vale: %d.\n", resultado , var1 );
+return EXIT_SUCCESS;
+}
+
+Fijémonos en lo que ha cambiado (con letra en negrita): En la función suma hemos declarado 'a' como puntero. En la llamada a la función (dentro de main) hemos puesto & para pasar la dirección de la variable var1. Ya sólo queda hacer cero a var1 a través de *a=0.
+
+También usamos una variable 'c' que nos servirá para almacenar la suma de 'a' y 'b'.
+
+Es importante no olvidar el operador & en la llamada a la función ya que sin el no estaríamos pasando la dirección de la variable sino el valor de var1.
+
+Podemos usar tantos punteros como queramos en la definición de la función.
+
+NOTA IMPORTANTE: Existe la posibilidad de hacer el ejercicio de esta otra manera, sin usar la variable resultado:
+
+#include <stdio.h> #include <stdlib.h>
+
+int suma( int *a, int b )
+
+\{
+
+int c;
+c = *a + b;
+*a = 0;
+return c;
+}
+
+int main()
+
+\{
+
+int var1, var2;
+var1 = 5; var2 = 8;
+ printf( "La suma es: %d y var1 vale: %d\n", suma(*&var1*, var2) , var1
+);
+return EXIT_SUCCESS;
+}
+
+Sin embargo, esto puede dar problemas, ya que no podemos asegurar de cómo va a evaluar el compilador los argumentos de printf. Es posible que primero almacene el valor de var1 antes de evaluar suma. Si ocurriese así el resultado del programa sería: La suma es 13 y a vale 5, en lugar de La suma es 13 y a vale 0.
+
+Ejercicios
+*Ejercicio 1:* Encuentra un fallo muy grave:
+
+#include <stdio.h> #include <stdlib.h>
+
+int main()
+
+\{
+
+int *a;
+*a = 5;
+return EXIT_SUCCESS;
+}
+
+Solución: No hemos dado ninguna dirección al puntero. No sabemos a dónde apunta. Puede apuntar a cualquier sitio, al darle un valor estamos escribiendo en un lugar desconocido de la memoria. Esto puede dar problemas e incluso bloquear el ordenador. Recordemos que al ejecutar un programa éste se copia en la memoria, al escribir en cualquier parte puede que estemos cambiando el programa (en la memoria, no en el disco duro).
+
+*Ejercicio 2:* Escribe un programa que asigne un valor a una variable de tipo int. Hacer un puntero que apunte a ella y sumarle 3 usando el puntero. Luego mostrar el resultado.
+
+Solución: Esta es una posible solución:
+
+#include <stdio.h> #include <stdlib.h>
+
+int main()
+
+\{
+
+int a;
+int *b;
+a = 5;
+b = &a;
+*b += 3;
+printf( "El valor de a es = %d.\n", a );
+return EXIT_SUCCESS;
+}
+
+También se podía haber hecho:
+
+printf( "El valor de a es = %d\n", *b );
+
