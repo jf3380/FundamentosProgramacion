@@ -1,18 +1,5 @@
-Tema 2: Tipos de Datos, Expresiones, Lectura y Escritura
 
-== Capítulo 1. Introducción.
-
-=== Sobre el libro
-
-Este es un curso para principiantes así que intentaré que no haga falta ningún conocimiento anterior para seguirlo.
-Muchos otros cursos suponen conocimientos previos pero voy a intentar que eso no suceda aquí.
-
-NOTA IMPORTANTE: Si te pierdes no te desanimes, ponte en contacto conmigo y consúltame (al final del libro tienes varias formas para contactarme).
-Puede que alguna sección esté mal explicada. De esta forma estarás colaborando a mejorar el libro.
-
-=== Cómo resolver tus dudas
-
-En la última sección del libro podrás encontrar varias formas de contactar conmigo (email, Twitter, mi blog, etc).
+== Tema 2: Tipos de Datos, Expresiones, Lectura y Escritura
 
 === El lenguaje C
 
