@@ -9,7 +9,7 @@ int main(){
         while (condicion){ bloue de codigo } 
         */
         while(contador<MAX){
-                contador = contador + 1
+                contador = contador + 1;
 		contador++;
 		printf("imprimiendo %d, \n", contador);
 	}
