@@ -1,7 +1,7 @@
 /*Determinar si un numero es par o impar
 en caso de ser impar determinar si es un numero primo*/
 
-#include <stdlib.h>
+#include <stdio.h>
 
 
 int main()
