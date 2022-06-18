@@ -14,12 +14,12 @@ int main()
         /*leemos el numero entero*/
 	    
         /*ya que necesitamos varios resultados, usamos if y else*/
-	if(n%2==0)
+	       if(n%2==0)
                 {
 		 par=n;
 		 printf("\n%d es un numero par\n",par);
 	           }
-                else
+               else
                 {
 		impar=n;
 		if((impar/impar==1)&&(impar/1==impar)){
