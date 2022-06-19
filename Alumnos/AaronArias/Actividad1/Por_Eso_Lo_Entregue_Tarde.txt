@@ -1,3 +1,5 @@
+Se me desconfiguro el git y lo tuve que volver a borrar y descargar todo el repositorio, buscar tutoriales de como solucionarlo y listo.
+
 Aunque no lo pude entregar a tiempo, al menos subí el código que hice al repositorio a pesar de todo.
 
 Fue mi culpa por ser vago y por estar metido en otros asuntos, nada más alejado de la realidad.
