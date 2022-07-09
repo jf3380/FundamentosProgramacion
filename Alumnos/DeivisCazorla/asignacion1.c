@@ -1,10 +1,10 @@
 
 #include<stdio.h>
-
+#include<conio.h>
 int main(){
 	
-	printf("ésto es algo molestoso, pero me gusta :>");
-	getchar();
+	printf("esto es algo molestoso, pero me gusta :>");
+	getch();
 
 	return 0;
 	

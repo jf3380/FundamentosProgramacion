@@ -1,5 +1,6 @@
 #include<stdio.h>
 
+#include<conio.h>
 int main()
 
 {
@@ -12,13 +13,13 @@ int main()
 
     if (n % 2 == 0){
 
-        printf("El número es par\n");
+        printf("El numero es par\n");
 
        }
 
     else{
 
-        printf("El número es impar\n");
+        printf("El numero es impar\n");
          while (i <= n)
 
         {
@@ -46,7 +47,7 @@ int main()
         }
 
     }
- getchar();
+   getch();
     return 0;
  
 }
