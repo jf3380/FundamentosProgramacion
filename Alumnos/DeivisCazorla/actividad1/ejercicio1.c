@@ -1,16 +1,18 @@
-#include<stdio.h>
+/* determinar si un numero es par o impar,
+en caso de ser impar determinar si es un numero 
+primo*/
+#include <stdio.h>
 
-#include<conio.h>
 int main()
 
 {
-
-    int n,i=1,c=0;
-
+ /*estableciendo variables*/
+    int n,i=1,contador=0;
+  /*inicio */
     printf("Ingresa un numero:\n");
 
     scanf("%i",&n);
-
+  /*estableciendo condicionar para saber si el numero es par o impar*/
     if (n % 2 == 0){
 
         printf("El numero es par\n");
@@ -19,22 +21,24 @@ int main()
 
     else{
 
-        printf("El numero es impar\n");
+        printf("El numero  es impar\n");
+        /*si no es par establecemos la condicion para saber si es un numero primo*/
+         
          while (i <= n)
 
         {
-
+         /*si el modulo del numero es igual a cero se le agrega uno a la cariable contador*/
         if (n % i == 0){
 
-            c++;
+            contador++;
 
         }
 
         i++;
 
        }
-
-       if (c == 2){
+        /*establecemos una segunda condicion que va a escribir que es primo si el contador es igual a dos*/
+       if (contador == 2){
 
         printf("El numero es primo");
 
@@ -47,7 +51,7 @@ int main()
         }
 
     }
-   getch();
+   
     return 0;
  
 }
